@@ -37,7 +37,9 @@ def direct_iteration(A: np.ndarray, eps: float) -> Tuple[float, np.ndarray]:
     lambda_previous = 0  # предыдущее собственное значение
 
     # итерационный процесс
+    # k = 0
     while True:
+        # k += 1
         y = np.dot(A, x)  # умножаем на матрицу
         # находим новое собственное значение
         lambda_ = np.linalg.norm(y) / np.linalg.norm(x)
@@ -45,7 +47,7 @@ def direct_iteration(A: np.ndarray, eps: float) -> Tuple[float, np.ndarray]:
         if abs(lambda_ - lambda_previous) < eps:  # проверка на достижение точности
             break
         lambda_previous = lambda_  # обновляем предыдущее значение
-
+    # print("iterations: ", k)
     return lambda_, x  # возвращаем найденные собственное значение и собственный вектор
 
 

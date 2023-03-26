@@ -18,7 +18,7 @@ from typing import Tuple
 '''
 
 
-def simple_iteration(A: np.ndarray, epsilon: float) -> Tuple[float, np.ndarray]:
+def simple_iteration(A: np.ndarray, eps: float) -> Tuple[float, np.ndarray]:
     """
     Метод простых итераций для вычисления приближенного собственного вектора и соответствующего ему собственного значения
     матрицы A
@@ -33,16 +33,20 @@ def simple_iteration(A: np.ndarray, epsilon: float) -> Tuple[float, np.ndarray]:
     :rtype: Tuple[np.ndarray, float]
     """
     n = A.shape[0]  # размерность матрицы А
-    x = np.random.rand(n)  # начальный ненулевой вектор
+
+    # x состоит из единиц
+    x = np.ones(n)  # начальный ненулевой вектор
     x /= np.linalg.norm(x)  # нормирование начального вектора
-
+    k = 0  # счетчик итераций
     while True:
-
+        k += 1
+        if k % 100 == 0:  # проверка на количество итераций
+            print(f"iteration {k}")
         x_new = A @ x  # умножение матрицы А на текущий вектор x
         x_new /= np.linalg.norm(x_new)  # нормирование нового вектора
         epsilon_cur = np.linalg.norm(x_new - x)  # вычисление погрешности
-        if epsilon_cur < epsilon:  # проверка достижения требуемой точности
-
+        if epsilon_cur < eps:  # проверка достижения требуемой точности
+            print(f"iteration {k}")
             # возврат собственного значения и собственного вектора
             return x_new @ A @ x_new / (x_new @ x_new), x_new
         x = x_new  # обновление текущего вектора для следующей итерации
@@ -54,4 +58,4 @@ if __name__ == "__main__":
          [1, 2, -1]]
     print("a = ", a)
 
-    print(simple_iteration(np.array(a), epsilon=0.001))
+    print(simple_iteration(np.array(a), eps=0.001))

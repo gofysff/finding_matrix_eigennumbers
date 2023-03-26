@@ -14,7 +14,7 @@ from typing import Tuple
 import numpy as np
 
 
-def reverse_iteration(A: np.ndarray, epsilon: float) -> Tuple[float, np.ndarray]:
+def reverse_iteration(A: np.ndarray, eps: float) -> Tuple[float, np.ndarray]:
     # Выбор начального приближения для собственных чисел
     x = np.random.rand(A.shape[0])
     λ = np.random.rand()
@@ -25,8 +25,10 @@ def reverse_iteration(A: np.ndarray, epsilon: float) -> Tuple[float, np.ndarray]
 
     # Обновление приближения к собственному числу
     λ_new = (x.T @ A @ x) / (x.T @ x)
+    # k = 0
+    while abs(λ - λ_new) > eps:
+        # k += 1
 
-    while abs(λ - λ_new) > epsilon:
         # Обновление приближения к собственному числу и нормирование вектора x
         λ = λ_new
         x = np.linalg.solve(A - λ * np.eye(A.shape[0]), x)
@@ -34,7 +36,7 @@ def reverse_iteration(A: np.ndarray, epsilon: float) -> Tuple[float, np.ndarray]
 
         # Обновление приближения к собственному числу
         λ_new = (x.T @ A @ x) / (x.T @ x)
-
+    # print("k = ", k)
     # Возвращение найденного собственного числа и соответствующего ему собственного вектора
     return λ_new, x
 
@@ -45,4 +47,4 @@ if __name__ == "__main__":
          [1, 2, -1]]
     print("a = ", a)
 
-    print(reverse_iteration(np.array(a), epsilon=0.001))
+    print(reverse_iteration(np.array(a), eps=0.001))
