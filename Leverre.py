@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def Leverre(A: np.array):
+def leverre(A: np.array):
     n = A.shape[0]
     B = A
     SpAk = np.zeros((n))
@@ -31,4 +31,4 @@ def Leverre(A: np.array):
 if __name__ == '__main__':
 
     A = np.array(([5, 6, 3], [-1, 0, 1], [1, 2, -1]))
-    Leverre(A)
+    leverre(A)
