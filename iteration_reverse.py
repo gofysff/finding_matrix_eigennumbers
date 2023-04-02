@@ -14,31 +14,24 @@ from typing import Tuple
 import numpy as np
 
 
-def reverse_iteration(A: np.ndarray, eps: float) -> Tuple[float, np.ndarray]:
+def reverse_iteration(A: np.ndarray, eps: float, max_iterations=10000) -> Tuple[float, np.ndarray]:
+    n: int = A.shape[0]
     # Выбор начального приближения для собственных чисел
-    x = np.random.rand(A.shape[0])
-    λ = np.random.rand()
+    x = np.random.rand(n)
+    alpha = max(x, key=abs)
+    for i in range(max_iterations):
+        # x_new = A @ x / alpha
+        x_new = np.linalg.solve(A, x/alpha)
 
-    # Решение системы Ax = b и нормирование полученного вектора
-    x = np.linalg.solve(A - λ * np.eye(A.shape[0]), x)
-    x = x / np.linalg.norm(x)
+        alpha_new = max(x_new, key=abs)
+        # проверка на условие остановки
+        if abs(alpha - alpha_new) < eps:
+            break
+        # обновление приближения
+        x = x_new
+        alpha = alpha_new
 
-    # Обновление приближения к собственному числу
-    λ_new = (x.T @ A @ x) / (x.T @ x)
-    # k = 0
-    while abs(λ - λ_new) > eps:
-        # k += 1
-
-        # Обновление приближения к собственному числу и нормирование вектора x
-        λ = λ_new
-        x = np.linalg.solve(A - λ * np.eye(A.shape[0]), x)
-        x = x / np.linalg.norm(x)
-
-        # Обновление приближения к собственному числу
-        λ_new = (x.T @ A @ x) / (x.T @ x)
-    # print("k = ", k)
-    # Возвращение найденного собственного числа и соответствующего ему собственного вектора
-    return λ_new, x
+    return 1/alpha, x
 
 
 if __name__ == "__main__":
@@ -47,4 +40,5 @@ if __name__ == "__main__":
          [1, 2, -1]]
     print("a = ", a)
 
+    print(reverse_iteration(np.array(a), eps=0.001))
     print(reverse_iteration(np.array(a), eps=0.001))
