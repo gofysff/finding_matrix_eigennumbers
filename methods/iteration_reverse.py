@@ -14,7 +14,7 @@ from typing import Tuple
 import numpy as np
 
 
-def reverse_iteration(A: np.ndarray, eps: float, max_iterations=10000) -> Tuple[float, np.ndarray]:
+def inverse_iteration(A: np.ndarray, eps: float, max_iterations=10000) -> Tuple[float, np.ndarray]:
     n: int = A.shape[0]
     # Выбор начального приближения для собственных чисел
     x = np.random.rand(n)
@@ -26,12 +26,15 @@ def reverse_iteration(A: np.ndarray, eps: float, max_iterations=10000) -> Tuple[
         alpha_new = max(x_new, key=abs)
         # проверка на условие остановки
         if abs(alpha - alpha_new) < eps:
+            print("iterations: ", i)
             break
         # обновление приближения
         x = x_new
         alpha = alpha_new
+    else:
+        print("max iterations exceeded")
 
-    return 1/alpha, x
+    return 1/alpha
 
 
 if __name__ == "__main__":
@@ -40,5 +43,5 @@ if __name__ == "__main__":
          [1, 2, -1]]
     print("a = ", a)
 
-    print(reverse_iteration(np.array(a), eps=0.001))
-    print(reverse_iteration(np.array(a), eps=0.001))
+    print(inverse_iteration(np.array(a), eps=0.001))
+    print(inverse_iteration(np.array(a), eps=0.001))

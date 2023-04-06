@@ -39,12 +39,15 @@ def direct_iteration(A: np.ndarray, eps: float, max_iterations=10000) -> Tuple[f
     # итерационный процесс
     for k in range(max_iterations):
         # умножаем на матрицу и нормализуем вектор по максимальному элементу
-        x_new = A @ x / np.max(np.abs(x))
-        if (np.abs(np.max(x_new) - np.max(x)) < eps):  # проверка на достижение точности
+        x_new = A @ (x / max(x, key=abs))
+        if (np.abs(max(x_new, key=abs) - max(x, key=abs)) < eps):  # проверка на достижение точности
+            print("Iterations: ", k)
             break
         x = x_new
+    else:
+        print("Reached max iterations: ")
     # возвращаем найденные собственное значение и собственный вектор
-    return np.max(x), x
+    return max(x, key=abs)
 
 
 if __name__ == "__main__":

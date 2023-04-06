@@ -32,14 +32,22 @@ def power_iteration(A: np.array, eps: float, max_iterations=10000) -> Tuple[floa
     n = A.shape[0]
     x = np.random.rand(n)
     x /= np.linalg.norm(x)
+
+    a = 0
     for i in range(max_iterations):
-        x_new = A @ x/np.max(np.abs(x))
-        if np.abs(np.max(x_new) - np.max(x)) < eps:
+        y = A @ x
+        a_new = np.dot(x, y) / np.dot(x, x)
+
+        x_new = y / np.linalg.norm(y)
+        if np.abs(a_new - a) < eps:
             print(f"iteration {i}")
             break
+        a = a_new
         x = x_new
-    max_eigenvalue = np.max(x)
-    return max_eigenvalue, x
+    else:
+        print("max iteration had been reached")
+
+    return a_new, x
 
 
 if __name__ == "__main__":

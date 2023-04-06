@@ -35,3 +35,8 @@ def hauseholder_method(A: np.array, eps: float) -> np.array:
     if alpha >= eps:
         return hauseholder_method(B, eps)
     return [B[i, i] for i in range(n)]
+
+
+if __name__ == '__main__':
+    A = np.array([[5, 6, 3], [-1, 0, 1], [1, 2, -1]])
+    # print("Собственные значения матрицы:\n", hausholder(A))
