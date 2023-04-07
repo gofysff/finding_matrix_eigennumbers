@@ -1,6 +1,6 @@
 import numpy as np
+
 import methods.iteration_direct as iteration_direct
-import methods.iteration_direct2 as iteration_direct2
 import methods.iteration_reverse as iteration_reverse
 import methods.iteration_power as iteration_power
 import methods.hauseholder_method as hauseholder_method
