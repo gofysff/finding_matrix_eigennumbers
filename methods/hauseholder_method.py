@@ -1,5 +1,7 @@
 import numpy as np
 
+counter_iterations = 0
+
 
 def get_basis_vector(index: int, size: int) -> np.ndarray:
     """Возвращает базисный вектор размера size с единицей на позиции index"""
@@ -9,6 +11,7 @@ def get_basis_vector(index: int, size: int) -> np.ndarray:
 
 
 def hauseholder_method(A: np.array, eps: float) -> np.array:
+    global counter_iterations
     """Метод Хаусхолдера"""
 
     n: int = A.shape[0]
@@ -33,7 +36,11 @@ def hauseholder_method(A: np.array, eps: float) -> np.array:
     #  диагонали матрицы A более, чем на eps и если да, то вызываем функцию hauseholder_method с матрицей B
     alpha = np.linalg.norm([B[i, i] - A[i, i] for i in range(n)])
     if alpha >= eps:
+        counter_iterations += 1
         return hauseholder_method(B, eps)
+    print(f'iterations: {counter_iterations}')
+    print("\n\nlast B-matix(hauseholder)")
+    print(B, end='\n\n')
     return [B[i, i] for i in range(n)]
 
 

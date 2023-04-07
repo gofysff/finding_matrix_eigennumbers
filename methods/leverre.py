@@ -24,6 +24,7 @@ def leverre(A):
             sum -= pk[j-1]*SpAk[i-j]
         print(sum)
         pk[i] = (SpAk[i]+sum)/(i+1)
+    print(f'\n\np(leverrie) is {pk}\n\n')
 
     def func(x):  # функция для формирования функции
         result = (x**n)-pk[n-1]

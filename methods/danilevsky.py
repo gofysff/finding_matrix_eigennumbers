@@ -16,6 +16,7 @@ def danilevsky(A):
             M_reverse[i][j] = A[i+1][j]
         A = np.matmul(M_reverse, np.matmul(A, M))
 
+    print(f'\n\nMatrix A(danilevsky) is \n{A}\n\n')
     res = np.zeros(n)
     for i in range((n)):
         res[i] = A[0][i]
